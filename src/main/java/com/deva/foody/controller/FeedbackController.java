@@ -32,10 +32,10 @@ public class FeedbackController {
         return feedbackService.getfeedbacksByRestaurant(restaurantId);
     }
 
-//    @PostMapping("/restaurant/{restaurantId}/member/{memberId}/feedbacks")
-//    public Feedback createFeedbacks(@PathVariable Long restaurantId, @PathVariable Long memberId, @Valid @RequestBody Feedback feedback) {
-//        return feedbackService.createFeedbacksByRestaurant(restaurantId, memberId, feedback);
-//    }
+    @PostMapping("/restaurant/{restaurantId}/member/{memberId}/feedbacks")
+    public Feedback createFeedbacks(@PathVariable Long restaurantId, @PathVariable Long memberId, @Valid @RequestBody Feedback feedback) {
+        return feedbackService.createFeedbacksByRestaurant(restaurantId, memberId, feedback);
+    }
 
     @DeleteMapping("/restaurant/{restaurantId}/feedbacks/{feedbackId}")
     public ResponseEntity<?> deleteFeedbacks(@PathVariable Long restaurantId, @PathVariable Long feedbackId) {

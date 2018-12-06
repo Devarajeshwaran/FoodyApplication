@@ -34,29 +34,17 @@ public class FeedbackService {
         return feedbackRepository.findByRestaurantId(restaurantId);
     }
 
-//    public Feedback createFeedbacksByRestaurant(Long restaurantId, Long memberId, Feedback feedback) {
-//        if(!memberRepository.existsById(memberId)){
-//            throw new ResourceNotFoundException("Member not found with id " + memberId);
-//        }
-//        if (!restaurantRepository.existsById(restaurantId)) {
-//            throw new ResourceNotFoundException("Restaurant not found with id " + restaurantId);
-//        }
-//
-//
-////        restaurantRepository.findById(restaurantId)
-////                .map(restaurant -> {
-////                    feedback.setRestaurant(restaurant);
-////                    return feedbackRepository.save(feedback);
-////                }).orElseThrow(() -> new ResourceNotFoundException("Restaurant not found with id " + restaurantId));
-////
-////        return memberRepository.findById(memberId)
-////                .map(member -> {
-////                    feedback.setMember(member);
-////                    return feedbackRepository.save(feedback);
-////                }).orElseThrow(() -> new ResourceNotFoundException("Member not found with id " + memberId));
-//
-//
-//    }
+    public Feedback createFeedbacksByRestaurant(Long restaurantId, Long memberId, Feedback feedback) {
+        return restaurantRepository.findById(restaurantId)
+            .map(restaurant -> {
+                feedback.setRestaurant(restaurant);
+                return memberRepository.findById(memberId)
+                    .map(member -> {
+                        feedback.setMember(member);
+                        return feedbackRepository.save(feedback);
+                    }).orElseThrow(() -> new ResourceNotFoundException("Member not found with id " + memberId));
+            }).orElseThrow(() -> new ResourceNotFoundException("Restaurant not found with id " + restaurantId));
+    }
 
     public ResponseEntity<?> removeFeedbacksByRestaurant(Long restaurantId, Long feedbackId) {
         if (!restaurantRepository.existsById(restaurantId)) {
